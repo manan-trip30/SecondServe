@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodLink - Surplus Food Distribution</title>
+    <!-- Material UI Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Material UI CSS -->
+    <link href="https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1><span class="material-icons">restaurant</span> FoodLink</h1>
+            <p>Connecting surplus food with those in need</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Registration Cards -->
+            <div class="registration-container">
+                <div class="card distributor-card">
+                    <span class="material-icons card-icon">store</span>
+                    <h2>Join as Distributor</h2>
+                    <p>Restaurants, event organizers, and food businesses</p>
+                    <button class="mui-btn" onclick="showRegistrationForm('distributor')">
+                        Register as Distributor
+                    </button>
+                </div>
+
+                <div class="card acceptor-card">
+                    <span class="material-icons card-icon">volunteer_activism</span>
+                    <h2>Join as Acceptor</h2>
+                    <p>NGOs, charitable trusts, and individuals in need</p>
+                    <button class="mui-btn" onclick="showRegistrationForm('acceptor')">
+                        Register as Acceptor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Registration Form Modal -->
+            <div id="registrationModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeModal()">&times;</span>
+                    <h2 id="modalTitle">Registration Form</h2>
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label for="name">Full Name / Organization Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" placeholder="Tell us more about your organization/requirements"></textarea>
+                        </div>
+                        <button type="submit" class="mui-btn">Submit Registration</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 FoodLink. Making a difference together.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html> 
