@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - SecondServe</title>
+  <meta name="description" content="View your food donation statistics and recent activity on your SecondServe dashboard.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-brand">
+        <i class="fas fa-utensils"></i>
+        SecondServe
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="signin.html">Sign In</a></li>
+        <li><a href="signup.html" class="btn btn-accent">Sign Up</a></li>
+      </ul>
+      
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="donate.html">Donate</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+    </ul>
+  </div>
+
+  <!-- Dashboard Header -->
+  <section class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-header-content">
+        <div>
+          <h1>Your Dashboard</h1>
+          <p>Track your donations and impact in the community</p>
+        </div>
+        <a href="donate.html" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Donate Food
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Content -->
+  <section class="dashboard-content">
+    <div class="container">
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-box-open"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Active Donations</h3>
+            <p class="stat-value">3</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Completed Donations</h3>
+            <p class="stat-value">12</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3>People Helped</h3>
+            <p class="stat-value">45</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recent Activity -->
+      <div class="activity-section">
+        <div class="section-header">
+          <h2>Recent Activity</h2>
+          <a href="#" class="view-all">View All</a>
+        </div>
+        
+        <div class="activity-card">
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-plus-circle"></i>
+              </div>
+              <div class="activity-details">
+                <h4>New Donation Request</h4>
+                <p>Fresh vegetables and fruits</p>
+                <span class="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <div class="activity-details">
+                <h4>Donation Completed</h4>
+                <p>Canned goods (5 items)</p>
+                <span class="activity-time">1 day ago</span>
+              </div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="activity-details">
+                <h4>New Recipient Matched</h4>
+                <p>Local community center</p>
+                <span class="activity-time">2 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Upcoming Pickups -->
+      <div class="pickups-section">
+        <div class="section-header">
+          <h2>Upcoming Pickups</h2>
+          <a href="#" class="view-all">View All</a>
+        </div>
+        
+        <div class="pickups-card">
+          <div class="pickup-item">
+            <div class="pickup-date">
+              <span class="day">15</span>
+              <span class="month">Jun</span>
+            </div>
+            <div class="pickup-details">
+              <h4>Fresh Produce Donation</h4>
+              <p><i class="fas fa-map-marker-alt"></i> 123 Main St, Anytown</p>
+              <p><i class="fas fa-clock"></i> 2:00 PM - 4:00 PM</p>
+            </div>
+            <div class="pickup-actions">
+              <button class="btn btn-outline">Reschedule</button>
+              <button class="btn btn-accent">Details</button>
+            </div>
+          </div>
+          
+          <div class="pickup-item">
+            <div class="pickup-date">
+              <span class="day">18</span>
+              <span class="month">Jun</span>
+            </div>
+            <div class="pickup-details">
+              <h4>Bakery Items</h4>
+              <p><i class="fas fa-map-marker-alt"></i> 456 Oak Ave, Anytown</p>
+              <p><i class="fas fa-clock"></i> 9:00 AM - 11:00 AM</p>
+            </div>
+            <div class="pickup-actions">
+              <button class="btn btn-outline">Reschedule</button>
+              <button class="btn btn-accent">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>SecondServe</h3>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px;">Connecting food donors with recipients to reduce waste and help those in need.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="donate.html">Donate Food</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li><a href="#">Food Safety Guidelines</a></li>
+            <li><a href="#">Donation Tips</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li><a href="mailto:info@secondserve.org">info@secondserve.org</a></li>
+            <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+            <li><a href="#">123 Main Street, City</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 SecondServe. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html> 
