@@ -1,4 +1,17 @@
+import { protectPage, getCurrentUser } from './auth.js';
+import { auth } from './firebase.js';
+import { initSidebar } from './sidebar.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Protect this page from unauthenticated users
+    protectPage();
+    
+    // Update user information in the header
+    updateUserProfile();
+    
+    // Initialize the sidebar
+    initSidebar();
+    
     // Initialize the impact chart
     initImpactChart();
     
@@ -32,7 +45,77 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '#add-listing';
         });
     }
+    
+    // Add logout functionality
+    setupLogoutHandler();
 });
+
+// Update user profile information based on Firebase auth
+function updateUserProfile() {
+    const user = getCurrentUser();
+    const userProfileElement = document.querySelector('.user-profile span');
+    
+    if (user && userProfileElement) {
+        // If we have user data in Firestore, we could retrieve more details here
+        // For now, just use the email as display name
+        userProfileElement.textContent = user.displayName || user.email;
+        
+        // Create a dropdown menu for user profile
+        const userProfile = document.querySelector('.user-profile');
+        if (userProfile) {
+            createUserDropdown(userProfile);
+        }
+    }
+}
+
+// Create user dropdown menu
+function createUserDropdown(userProfile) {
+    // Create dropdown if it doesn't exist
+    if (!document.querySelector('.user-dropdown')) {
+        const dropdown = document.createElement('div');
+        dropdown.className = 'user-dropdown';
+        dropdown.innerHTML = `
+            <ul>
+                <li><a href="#profile"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        `;
+        
+        userProfile.appendChild(dropdown);
+        
+        // Toggle dropdown visibility on click
+        userProfile.addEventListener('click', function() {
+            dropdown.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!userProfile.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Setup logout handler
+function setupLogoutHandler() {
+    // Use event delegation to handle the logout button click
+    document.body.addEventListener('click', async function(e) {
+        if (e.target.id === 'logout-btn' || e.target.closest('#logout-btn')) {
+            e.preventDefault();
+            
+            try {
+                await auth.signOut();
+                // Redirect to login page
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('An error occurred while trying to log out.');
+            }
+        }
+    });
+}
 
 // Initialize the impact chart with the line graph
 function initImpactChart() {

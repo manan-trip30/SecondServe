@@ -1,4 +1,10 @@
+import { auth } from './firebase.js';
+import { initSidebar } from './sidebar.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the sidebar for authenticated users
+    setupAuthenticationState();
+    
     // Initialize map if the map element exists
     if (document.getElementById('map')) {
         initMap();
@@ -6,31 +12,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Toggle filter checkboxes
     const filterOptions = document.querySelectorAll('.filter-option');
-    filterOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
-            // Don't toggle if the click was directly on the checkbox
-            if (e.target.type !== 'checkbox') {
-                const checkbox = this.querySelector('input[type="checkbox"]');
-                checkbox.checked = !checkbox.checked;
-            }
-            
-            // Apply filters
-            applyFilters();
+    if (filterOptions) {
+        filterOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                // Don't toggle if the click was directly on the checkbox
+                if (e.target.type !== 'checkbox') {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                // Apply filters
+                applyFilters();
+            });
         });
-    });
+    }
 
     // Initialize reserve buttons
     const reserveButtons = document.querySelectorAll('.food-card .btn-primary');
-    reserveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const foodName = this.closest('.food-info').querySelector('h3').textContent;
-            alert(`You've successfully reserved ${foodName}! The food provider will be notified.`);
-            this.textContent = 'Reserved';
-            this.disabled = true;
-            this.style.backgroundColor = '#4ECDC4';
+    if (reserveButtons) {
+        reserveButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const foodName = this.closest('.food-info').querySelector('h3').textContent;
+                alert(`You've successfully reserved ${foodName}! The food provider will be notified.`);
+                this.textContent = 'Reserved';
+                this.disabled = true;
+                this.style.backgroundColor = '#4ECDC4';
+            });
         });
-    });
+    }
 });
+
+// Set up authentication state and UI
+function setupAuthenticationState() {
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // User is signed in
+            handleAuthenticatedUser(user);
+        } else {
+            // User is signed out
+            handleUnauthenticatedUser();
+        }
+    });
+}
+
+// Handle authenticated user
+function handleAuthenticatedUser(user) {
+    const headerRight = document.querySelector('.header-right');
+    
+    if (headerRight) {
+        // Hide sign-up and sign-in buttons
+        const signUpBtn = headerRight.querySelector('a[href="signup.html"]');
+        const signInBtn = headerRight.querySelector('a[href="login.html"]');
+        
+        if (signUpBtn) signUpBtn.style.display = 'none';
+        if (signInBtn) signInBtn.style.display = 'none';
+        
+        // Show user profile
+        const userProfile = headerRight.querySelector('.user-profile');
+        if (userProfile) {
+            userProfile.style.display = 'flex';
+            
+            // Add a span with user email if it doesn't exist
+            if (!userProfile.querySelector('span')) {
+                const userNameSpan = document.createElement('span');
+                userNameSpan.textContent = user.displayName || user.email;
+                userProfile.appendChild(userNameSpan);
+            }
+        }
+        
+        // Initialize sidebar
+        initSidebar();
+    }
+}
+
+// Handle unauthenticated user
+function handleUnauthenticatedUser() {
+    const headerRight = document.querySelector('.header-right');
+    
+    if (headerRight) {
+        // Show sign-up and sign-in buttons
+        const signUpBtn = headerRight.querySelector('a[href="signup.html"]');
+        const signInBtn = headerRight.querySelector('a[href="login.html"]');
+        
+        if (signUpBtn) signUpBtn.style.display = 'inline-flex';
+        if (signInBtn) signInBtn.style.display = 'inline-flex';
+        
+        // Hide user profile
+        const userProfile = headerRight.querySelector('.user-profile');
+        if (userProfile) {
+            userProfile.style.display = 'none';
+        }
+    }
+}
 
 // Map initialization (placeholder using a basic map style)
 function initMap() {

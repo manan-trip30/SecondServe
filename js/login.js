@@ -1,4 +1,10 @@
+import { loginWithEmailAndPassword, signInWithGoogle } from './firebase.js';
+import { redirectIfAuthenticated } from './auth.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if user is already logged in
+    redirectIfAuthenticated();
+    
     // Password visibility toggle
     const passwordField = document.getElementById('password');
     const passwordToggle = document.querySelector('.password-toggle');
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.login-form');
     
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
@@ -37,31 +43,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // In a real app, we would send this data to a server for authentication
-            console.log('Login attempt:', { email, password, rememberMe });
-            
-            // Simulate successful login
-            document.querySelector('.sign-in-btn').textContent = 'Signing in...';
-            
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1500);
+            try {
+                // Show loading state
+                const signInBtn = document.querySelector('.sign-in-btn');
+                signInBtn.textContent = 'Signing in...';
+                signInBtn.disabled = true;
+                
+                // Authenticate with Firebase
+                const result = await loginWithEmailAndPassword(email, password);
+                
+                if (result.success) {
+                    // Save remember me preference
+                    if (rememberMe) {
+                        localStorage.setItem('rememberMe', 'true');
+                    } else {
+                        localStorage.removeItem('rememberMe');
+                    }
+                    
+                    console.log('Login successful');
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    alert(`Error: ${result.error}`);
+                    signInBtn.textContent = 'Sign in';
+                    signInBtn.disabled = false;
+                }
+            } catch (error) {
+                alert(`An unexpected error occurred: ${error.message}`);
+                const signInBtn = document.querySelector('.sign-in-btn');
+                signInBtn.textContent = 'Sign in';
+                signInBtn.disabled = false;
+            }
         });
     }
     
-    // Social login functionality (placeholder)
+    // Social login functionality
     const googleLogin = document.querySelector('.google-login');
-    const facebookLogin = document.querySelector('.facebook-login');
     
     if (googleLogin) {
-        googleLogin.addEventListener('click', function() {
-            alert('Google sign in would be initiated here');
+        googleLogin.addEventListener('click', async function() {
+            try {
+                const result = await signInWithGoogle();
+                if (result.success) {
+                    console.log('Google sign-in successful');
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`An unexpected error occurred: ${error.message}`);
+            }
         });
     }
-    
-    if (facebookLogin) {
-        facebookLogin.addEventListener('click', function() {
-            alert('Facebook sign in would be initiated here');
-        });
-    }
-}); 
+});

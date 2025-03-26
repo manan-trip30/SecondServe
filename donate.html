@@ -6,6 +6,7 @@
     <title>SecondServe - Donate Food</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/donate.css">
+    <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +22,7 @@
             </div>
             <nav class="donate-nav">
                 <a href="#" class="active">Donate Food</a>
-                <a href="#">My Donations</a>
+                <a href="dashboard.html">My Donations</a>
                 <a href="#">About Us</a>
             </nav>
         </div>
@@ -33,6 +34,7 @@
             </div>
             <div class="user-profile">
                 <img src="images/user-profile.jpg" alt="User Profile">
+                <span id="user-name">Loading...</span>
             </div>
         </div>
     </header>
@@ -49,7 +51,7 @@
         </section>
 
         <section class="donation-form-container">
-            <form class="donation-form">
+            <form class="donation-form" id="donation-form">
                 <div class="upload-section">
                     <h2>Upload Food Images</h2>
                     <div class="upload-area">
@@ -60,6 +62,7 @@
                             <button type="button" class="btn upload-btn">Select Files</button>
                             <input type="file" id="file-upload" multiple accept="image/jpeg, image/png" hidden>
                         </div>
+                        <div class="preview-container" id="image-preview"></div>
                     </div>
                 </div>
 
@@ -164,8 +167,8 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-outline">Save as Draft</button>
-                        <button type="submit" class="btn btn-primary">Donate Now</button>
+                        <button type="button" class="btn btn-outline" id="save-draft-btn">Save as Draft</button>
+                        <button type="submit" class="btn btn-primary" id="donate-btn">Donate Now</button>
                     </div>
                 </div>
             </form>
@@ -185,6 +188,6 @@
         </div>
     </footer>
 
-    <script src="js/donate.js"></script>
+    <script src="js/donate.js" type="module"></script>
 </body>
 </html> 

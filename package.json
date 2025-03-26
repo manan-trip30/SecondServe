@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "firebase": "^11.5.0"
   }
 }

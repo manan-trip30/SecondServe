@@ -1,4 +1,20 @@
+import { protectPage, getCurrentUser } from './auth.js';
+import { auth } from './firebase.js';
+import { createDonation } from './firestore.js';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { initSidebar } from './sidebar.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Protect this page - require authentication
+    protectPage();
+    
+    // Update user display name
+    updateUserDisplay();
+    
+    // Initialize the sidebar
+    initSidebar();
+    
+    // Initialize the donation form functionality
     initImageUpload();
     setupFormValidation();
     setupFormSubmission();
@@ -6,10 +22,21 @@ document.addEventListener('DOMContentLoaded', function() {
     setupTimeInputs();
 });
 
+// Update the user display name
+function updateUserDisplay() {
+    const user = getCurrentUser();
+    const userNameElement = document.getElementById('user-name');
+    
+    if (user && userNameElement) {
+        userNameElement.textContent = user.displayName || user.email;
+    }
+}
+
 // Handle image upload functionality
 function initImageUpload() {
     const uploadArea = document.querySelector('.upload-area');
     const fileInput = document.getElementById('file-upload');
+    const previewContainer = document.getElementById('image-preview');
     
     // Handle drag and drop events
     uploadArea.addEventListener('dragover', function(e) {
@@ -38,25 +65,19 @@ function initImageUpload() {
         }
     });
     
-    // Click on upload area triggers file input
-    uploadArea.addEventListener('click', function() {
+    // Click on upload button triggers file input
+    document.querySelector('.upload-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
         fileInput.click();
     });
     
     // Handle the selected files
     function handleFiles(files) {
-        const imagePreviewContainer = document.createElement('div');
-        imagePreviewContainer.className = 'image-preview-container';
-        
         // Clear existing previews if any
-        const existingPreviews = uploadArea.querySelector('.image-preview-container');
-        if (existingPreviews) {
-            uploadArea.removeChild(existingPreviews);
-        }
+        previewContainer.innerHTML = '';
         
-        // Hide upload placeholder
-        const placeholder = uploadArea.querySelector('.upload-placeholder');
-        placeholder.style.display = 'none';
+        // Show preview container
+        previewContainer.style.display = 'flex';
         
         // Create previews for each file
         Array.from(files).forEach(file => {
@@ -80,22 +101,19 @@ function initImageUpload() {
                     e.stopPropagation();
                     preview.remove();
                     
-                    // Show placeholder if no more previews
-                    if (imagePreviewContainer.childElementCount === 0) {
-                        placeholder.style.display = 'flex';
-                        uploadArea.removeChild(imagePreviewContainer);
+                    // Hide preview container if no more previews
+                    if (previewContainer.childElementCount === 0) {
+                        previewContainer.style.display = 'none';
                     }
                 });
                 
                 preview.appendChild(img);
                 preview.appendChild(removeBtn);
-                imagePreviewContainer.appendChild(preview);
+                previewContainer.appendChild(preview);
             };
             
             reader.readAsDataURL(file);
         });
-        
-        uploadArea.appendChild(imagePreviewContainer);
     }
 }
 
@@ -172,14 +190,134 @@ function setupFormValidation() {
     });
 }
 
-// Handle form submission
-function setupFormSubmission() {
-    const form = document.querySelector('.donation-form');
+// Handle form submission with Firebase
+async function setupFormSubmission() {
+    const form = document.getElementById('donation-form');
+    const donateBtn = document.getElementById('donate-btn');
+    const draftBtn = document.getElementById('save-draft-btn');
     
-    form.addEventListener('submit', function(e) {
+    // Handle form submission
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Check if all required fields are filled
+        // Basic form validation
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Get the current user
+        const user = getCurrentUser();
+        if (!user) {
+            alert('You must be logged in to donate food');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // Show loading state
+        donateBtn.disabled = true;
+        donateBtn.textContent = 'Submitting...';
+        
+        try {
+            // Get form data
+            const formData = new FormData(form);
+            const donationData = {
+                foodName: formData.get('foodName'),
+                description: formData.get('description'),
+                quantity: formData.get('quantity'),
+                quantityUnit: formData.get('quantityUnit'),
+                bestBefore: formData.get('bestBefore'),
+                category: formData.get('category'),
+                pickupLocation: formData.get('pickupLocation'),
+                availableFrom: formData.get('availableFrom'),
+                availableUntil: formData.get('availableUntil'),
+                canDeliver: formData.get('canDeliver') === 'on',
+                pickupInstructions: formData.get('pickupInstructions') || '',
+                userId: user.uid,
+                userEmail: user.email,
+                status: 'available'
+            };
+            
+            // Upload images first (if any)
+            const fileInput = document.getElementById('file-upload');
+            const imageUrls = [];
+            
+            if (fileInput.files.length > 0) {
+                const storage = getStorage();
+                
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    const fileExtension = file.name.split('.').pop();
+                    const fileName = `donations/${user.uid}/${Date.now()}-${i}.${fileExtension}`;
+                    const storageRef = ref(storage, fileName);
+                    
+                    // Upload the file
+                    const uploadTask = uploadBytesResumable(storageRef, file);
+                    
+                    // Get the download URL after upload completes
+                    const downloadURL = await new Promise((resolve, reject) => {
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                // Handle progress
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                console.log('Upload is ' + progress + '% done');
+                            },
+                            (error) => {
+                                // Handle error
+                                reject(error);
+                            },
+                            async () => {
+                                // Upload completed successfully, get download URL
+                                const url = await getDownloadURL(uploadTask.snapshot.ref);
+                                resolve(url);
+                            }
+                        );
+                    });
+                    
+                    imageUrls.push(downloadURL);
+                }
+            }
+            
+            // Add image URLs to donation data
+            donationData.images = imageUrls;
+            
+            // Submit donation to Firestore
+            const result = await createDonation(donationData);
+            
+            if (result.success) {
+                // Show success message
+                showSuccessMessage('Your donation has been submitted successfully!');
+                
+                // Reset form
+                form.reset();
+                const previewContainer = document.getElementById('image-preview');
+                previewContainer.innerHTML = '';
+                previewContainer.style.display = 'none';
+                
+                // Redirect to dashboard after a delay
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            } else {
+                throw new Error(result.error);
+            }
+        } catch (error) {
+            // Show error message
+            showErrorMessage(`Error submitting donation: ${error.message}`);
+        } finally {
+            // Reset button state
+            donateBtn.disabled = false;
+            donateBtn.textContent = 'Donate Now';
+        }
+    });
+    
+    // Save as draft functionality
+    draftBtn.addEventListener('click', function() {
+        // Implement draft saving logic here
+        alert('This feature is coming soon!');
+    });
+    
+    // Form validation helper
+    function validateForm() {
         const requiredFields = form.querySelectorAll('[required]');
         let isValid = true;
         
@@ -200,100 +338,38 @@ function setupFormSubmission() {
             }
         });
         
-        // Additional validation for date fields
-        const dateFields = form.querySelectorAll('input[type="date"]');
-        dateFields.forEach(field => {
-            if (field.value) {
-                const selectedDate = new Date(field.value);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                
-                if ((selectedDate < today) && (field.id === 'bestBefore' || field.id === 'pickupDate')) {
-                    field.classList.add('invalid');
-                    let errorMsg = field.parentElement.querySelector('.error-message');
-                    if (!errorMsg) {
-                        errorMsg = document.createElement('p');
-                        errorMsg.className = 'error-message';
-                        field.parentElement.appendChild(errorMsg);
-                        errorMsg.textContent = 'Date cannot be in the past';
-                    }
-                    
-                    isValid = false;
-                }
-            }
-        });
-        
-        // Check that "Available Until" is after "Available From"
-        const fromTime = document.getElementById('availableFrom').value;
-        const untilTime = document.getElementById('availableUntil').value;
-        
-        if (fromTime && untilTime && fromTime >= untilTime) {
-            document.getElementById('availableUntil').classList.add('invalid');
-            let errorMsg = document.getElementById('availableUntil').parentElement.parentElement.querySelector('.error-message');
-            if (!errorMsg) {
-                errorMsg = document.createElement('p');
-                errorMsg.className = 'error-message';
-                document.getElementById('availableUntil').parentElement.parentElement.appendChild(errorMsg);
-            }
-            errorMsg.textContent = 'End time must be after start time';
-            
-            isValid = false;
-            
-            // Scroll to the error
-            document.getElementById('availableUntil').parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-        
-        if (isValid) {
-            // Simulate form submission with a success message
-            const successMsg = document.createElement('div');
-            successMsg.className = 'success-message';
-            successMsg.innerHTML = `
-                <div class="success-icon">✓</div>
-                <h3>Thank you for your donation!</h3>
-                <p>Your food donation has been successfully submitted. We will notify you when someone claims it.</p>
-                <button class="btn btn-primary">Return to Dashboard</button>
-            `;
-            
-            // Replace form with success message
-            form.style.display = 'none';
-            form.parentElement.appendChild(successMsg);
-            
-            // Add event listener to the return button
-            const returnBtn = successMsg.querySelector('button');
-            returnBtn.addEventListener('click', function() {
-                window.location.href = 'dashboard.html';
-            });
-            
-            // In a real app, you would submit the form data to your server here
-            // const formData = new FormData(form);
-            // fetch('/api/donate', {
-            //     method: 'POST',
-            //     body: formData
-            // }).then(response => {
-            //     // Handle response
-            // }).catch(error => {
-            //     // Handle error
-            // });
-        } else {
-            // Scroll to the first error
-            const firstError = form.querySelector('.invalid');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                firstError.focus();
-            }
-        }
-    });
+        return isValid;
+    }
     
-    // Handle cancel button
-    const cancelBtn = document.querySelector('.btn-outline');
-    cancelBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+    // Success message helper
+    function showSuccessMessage(message) {
+        const successMsg = document.createElement('div');
+        successMsg.className = 'success-message';
+        successMsg.textContent = message;
         
-        if (confirm('Are you sure you want to cancel? Your donation information will not be saved.')) {
-            window.location.href = 'dashboard.html';
-        }
-    });
+        // Add to the page
+        document.querySelector('.donation-form-container').appendChild(successMsg);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            successMsg.remove();
+        }, 5000);
+    }
+    
+    // Error message helper
+    function showErrorMessage(message) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'error-message global-error';
+        errorMsg.textContent = message;
+        
+        // Add to the page
+        document.querySelector('.donation-form-container').appendChild(errorMsg);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            errorMsg.remove();
+        }, 5000);
+    }
 }
 
 // Handle category selection
@@ -452,4 +528,4 @@ function setupTimeInputs() {
             }
         });
     }
-} 
+}
