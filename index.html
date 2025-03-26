@@ -3,160 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecondServe - Reduce Food Waste</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>SecondServe - Give Food a Second Chance</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <a href="index.html" class="logo">
-                <img src="images/logo.svg" alt="SecondServe Logo" class="logo-img">
-            </a>
-            <h1 class="header-title">Reduce Food Waste<br>Share with Those in Need</h1>
+            <div class="logo">
+                <img src="images/logo.png" alt="SecondServe Logo">
+                <span>SecondServe</span>
+            </div>
         </div>
         <div class="header-right">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search foods...">
             </div>
-            <button class="btn btn-primary">Sign In</button>
+            <a href="signup.html" class="btn btn-outline">Sign Up</a>
+            <a href="login.html" class="btn btn-outline-secondary">Sign In</a>
+            <button class="btn btn-primary">Share Food</button>
             <div class="user-profile">
-                <img src="images/avatar.jpg" alt="User profile">
+                <img src="images/user-profile.jpg" alt="User Profile">
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Reduce Food Waste<br>Share with Those in<br>Need</h1>
+                <p>Connect restaurants and event organizers with organizations helping those in need. Together, we can make a difference in reducing food waste and hunger.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-dark">Donate Food</button>
+                    <button class="btn btn-light">Find Food</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-food.jpg" alt="Various fresh foods">
+            </div>
+        </div>
+    </section>
+
     <main class="main-content">
-        <!-- Filters Section -->
         <section class="filters-section">
-            <h2>Filter</h2>
+            <h2>Available Food</h2>
             <div class="filter-options">
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="vegetables">
-                    <span>Vegetables</span>
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="fruits">
-                    <span>Fruits</span>
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="dairy">
-                    <span>Dairy</span>
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="grains">
-                    <span>Grains</span>
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="protein">
-                    <span>Protein</span>
-                </label>
-            </div>
-        </section>
-
-        <!-- Food Grid Section -->
-        <section class="food-grid-section">
-            <div class="food-grid">
-                <div class="food-card">
-                    <img src="https://source.unsplash.com/random/400x300/?vegetables" alt="Mixed Vegetables">
-                    <div class="food-info">
-                        <h3>Mixed Vegetables</h3>
-                        <p>Fresh assorted vegetables including carrots, tomatoes, and lettuce</p>
-                        <button class="btn btn-primary">Request</button>
-                    </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-vegetarian">
+                    <label for="filter-vegetarian">Vegetarian</label>
                 </div>
-                <div class="food-card">
-                    <img src="https://source.unsplash.com/random/400x300/?nuts" alt="Mixed Nuts">
-                    <div class="food-info">
-                        <h3>Mixed Nuts</h3>
-                        <p>Assorted nuts including almonds, cashews, and walnuts</p>
-                        <button class="btn btn-primary">Request</button>
-                    </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-vegan">
+                    <label for="filter-vegan">Vegan</label>
                 </div>
-                <div class="food-card">
-                    <img src="https://source.unsplash.com/random/400x300/?fruits" alt="Fresh Fruits">
-                    <div class="food-info">
-                        <h3>Fresh Fruits</h3>
-                        <p>Seasonal fruits including apples, oranges, and bananas</p>
-                        <button class="btn btn-primary">Request</button>
-                    </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-gluten-free">
+                    <label for="filter-gluten-free">Gluten-Free</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-dairy-free">
+                    <label for="filter-dairy-free">Dairy-Free</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-nuts-free">
+                    <label for="filter-nuts-free">Nuts-Free</label>
                 </div>
             </div>
         </section>
 
-        <!-- Impact Section -->
+        <section class="food-grid">
+            <div class="food-card">
+                <img src="images/food1.jpg" alt="Pasta Dish">
+                <div class="food-info">
+                    <h3>Homemade Pasta</h3>
+                    <p>Freshly made pasta with tomato sauce and herbs. Made today, best before tomorrow.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="images/food2.jpg" alt="Fresh Salad">
+                <div class="food-info">
+                    <h3>Garden Fresh Salad</h3>
+                    <p>Organic vegetables from local garden. Perfect for a healthy lunch.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="images/food3.jpg" alt="Bread Loaf">
+                <div class="food-info">
+                    <h3>Artisan Bread</h3>
+                    <p>Freshly baked sourdough bread. Made this morning, good for 3 days.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="images/food4.jpg" alt="Fruit Platter">
+                <div class="food-info">
+                    <h3>Seasonal Fruits</h3>
+                    <p>Mix of seasonal fruits. Washed and ready to eat.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="images/food5.jpg" alt="Soup">
+                <div class="food-info">
+                    <h3>Vegetable Soup</h3>
+                    <p>Homemade vegetable soup. Made with organic ingredients.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="images/food6.jpg" alt="Dessert">
+                <div class="food-info">
+                    <h3>Apple Pie</h3>
+                    <p>Freshly baked apple pie. Perfect for dessert.</p>
+                    <button class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+        </section>
+
         <section class="impact-section">
             <h2>Our Impact</h2>
-            <p class="impact-subtitle">Together we're making a difference in our community</p>
+            <p class="impact-subtitle">Together we're making a difference in reducing food waste</p>
             <div class="impact-stats">
                 <div class="stat-item">
-                    <h3>2,500+</h3>
-                    <p>Food Items</p>
+                    <h3>2,450</h3>
+                    <p>Meals Shared</p>
                 </div>
                 <div class="stat-item">
-                    <h3>150+</h3>
-                    <p>Users</p>
+                    <h3>1,200</h3>
+                    <p>Active Users</p>
                 </div>
                 <div class="stat-item">
-                    <h3>1,200kg</h3>
-                    <p>Saved</p>
+                    <h3>3,680</h3>
+                    <p>kg CO₂ Saved</p>
                 </div>
                 <div class="stat-item">
-                    <h3>50+</h3>
+                    <h3>850</h3>
                     <p>Communities</p>
                 </div>
             </div>
         </section>
 
-        <!-- Map Section -->
         <section class="map-section">
             <h2>Find Food Near You</h2>
-            <div id="map"></div>
+            <div id="map">
+                <!-- Map will be inserted here via JavaScript -->
+            </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features-section">
             <div class="features-columns">
                 <div class="features-column">
-                    <h3>For Donors</h3>
+                    <h3>For Food Sharers</h3>
                     <ul>
-                        <li><i class="fas fa-check"></i> Post surplus food easily</li>
-                        <li><i class="fas fa-check"></i> Connect with local recipients</li>
-                        <li><i class="fas fa-check"></i> Reduce food waste</li>
+                        <li><i class="fas fa-check"></i> Share excess food instead of throwing away</li>
+                        <li><i class="fas fa-check"></i> Help reduce food waste in your community</li>
+                        <li><i class="fas fa-check"></i> Meet people from your neighborhood</li>
+                        <li><i class="fas fa-check"></i> Get notifications when your food is reserved</li>
                     </ul>
                 </div>
                 <div class="features-column">
-                    <h3>For Recipients</h3>
+                    <h3>For Food Receivers</h3>
                     <ul>
-                        <li><i class="fas fa-check"></i> Find available food nearby</li>
-                        <li><i class="fas fa-check"></i> Request items you need</li>
-                        <li><i class="fas fa-check"></i> Get notifications for new items</li>
+                        <li><i class="fas fa-check"></i> Find free food near you</li>
+                        <li><i class="fas fa-check"></i> Reduce your grocery bills</li>
+                        <li><i class="fas fa-check"></i> Try homemade food from your neighbors</li>
+                        <li><i class="fas fa-check"></i> Support sustainable food consumption</li>
                     </ul>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+                <a href="#">About Us</a>
+                <a href="#">How It Works</a>
+                <a href="#">Safety Guidelines</a>
+                <a href="#">Community Rules</a>
+                <a href="#">Contact Us</a>
             </div>
-            <p class="copyright">© 2024 SecondServe. All rights reserved.</p>
+            <p class="copyright">© 2023 SecondServe. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="js/script.js"></script>
 </body>
 </html> 

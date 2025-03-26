@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecondServe - Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="SecondServe Logo">
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Food
+            </button>
+            <div class="notifications">
+                <a href="#" class="notification-icon">
+                    <i class="far fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+            </div>
+            <div class="user-profile">
+                <img src="images/user-profile.jpg" alt="User Profile">
+                <span>John's Restaurant</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="dashboard-grid">
+            <!-- Active Donations Section -->
+            <section class="dashboard-card active-donations-card">
+                <div class="card-header">
+                    <h2>Active Donations</h2>
+                    <span class="badge">4 Active</span>
+                </div>
+                <div class="donations-list">
+                    <div class="donation-item">
+                        <div class="donation-info">
+                            <h3>Fresh Pasta & Sauce</h3>
+                            <p>Quantity: 20 portions</p>
+                        </div>
+                        <div class="donation-status available">Available</div>
+                    </div>
+                    <div class="donation-item">
+                        <div class="donation-info">
+                            <h3>Assorted Pastries</h3>
+                            <p>Quantity: 30 pieces</p>
+                        </div>
+                        <div class="donation-status pending">Pending</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impact Metrics Section -->
+            <section class="dashboard-card impact-metrics-card">
+                <div class="card-header">
+                    <h2>Impact Metrics</h2>
+                    <a href="#" class="view-more"><i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="metrics-container">
+                    <div class="metric">
+                        <h3>Total Meals Provided</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <span class="metric-value">1,240</span>
+                    </div>
+                    <div class="metric">
+                        <h3>Food Waste Reduced (kg)</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 60%"></div>
+                        </div>
+                        <span class="metric-value">520</span>
+                    </div>
+                    <div class="metric-chart">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Today's Schedule Section -->
+            <section class="dashboard-card schedule-card">
+                <div class="card-header">
+                    <h2>Today's Schedule</h2>
+                    <a href="#" class="schedule-menu"><i class="fas fa-ellipsis-v"></i></a>
+                </div>
+                <div class="schedule-list">
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span class="time">10:00</span>
+                            <span class="period">AM</span>
+                        </div>
+                        <div class="schedule-info">
+                            <h3>Food Pickup</h3>
+                            <p>Local Food Bank</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span class="time">2:30</span>
+                            <span class="period">PM</span>
+                        </div>
+                        <div class="schedule-info">
+                            <h3>New Listing Due</h3>
+                            <p>End of Service</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity Section -->
+            <section class="dashboard-card activity-card">
+                <div class="card-header">
+                    <h2>Recent Activity</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon accepted">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="activity-info">
+                            <h3>Donation Accepted</h3>
+                            <p>2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon listed">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="activity-info">
+                            <h3>New Food Listed</h3>
+                            <p>4 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions Section -->
+            <section class="dashboard-card actions-card">
+                <div class="card-header">
+                    <h2>Quick Actions</h2>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-button">
+                        <i class="fas fa-plus"></i>
+                        <span>Add New Listing</span>
+                    </button>
+                    <button class="action-button">
+                        <i class="fas fa-history"></i>
+                        <span>View History</span>
+                    </button>
+                    <button class="action-button">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </button>
+                    <button class="action-button">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

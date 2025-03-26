@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecondServe - Sign Up</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="signup-body">
+    <header class="signup-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/logo.png" alt="SecondServe Logo">
+            </a>
+        </div>
+        <div class="login-link">
+            <span>Already have an account?</span>
+            <a href="login.html">Sign in</a>
+        </div>
+    </header>
+
+    <main class="signup-container">
+        <div class="food-images-grid">
+            <img src="images/food-signup-1.jpg" alt="Food Image 1">
+            <img src="images/food-signup-2.jpg" alt="Food Image 2">
+            <img src="images/food-signup-3.jpg" alt="Food Image 3">
+            <img src="images/food-signup-4.jpg" alt="Food Image 4">
+        </div>
+
+        <div class="signup-form-container">
+            <h1>Join the Food Sharing Community</h1>
+            <p class="signup-subtitle">Help reduce food waste and make a difference in your community</p>
+            
+            <div class="role-selector">
+                <div class="role-card active" id="provider-role">
+                    <i class="fas fa-utensils"></i>
+                    <h3>I want to Share Food</h3>
+                    <p>Restaurants & Food Hubs</p>
+                </div>
+                <div class="role-card" id="receiver-role">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>I need Food</h3>
+                    <p>Organizations & Individuals</p>
+                </div>
+            </div>
+
+            <form class="signup-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" name="businessName">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="businessType">Business Type</label>
+                        <select id="businessType" name="businessType">
+                            <option value="restaurant">Restaurant</option>
+                            <option value="cafe">Café</option>
+                            <option value="bakery">Bakery</option>
+                            <option value="foodhub">Food Hub</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                </div>
+
+                <div class="social-signup">
+                    <button type="button" class="google-signup">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </button>
+                    <button type="button" class="facebook-signup">
+                        <i class="fab fa-facebook-f"></i>
+                        Sign up with Facebook
+                    </button>
+                </div>
+
+                <div class="terms-agreement">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+
+                <button type="submit" class="create-account-btn">Create Account</button>
+            </form>
+            
+            <p class="signup-footer">Your registration helps reduce food waste and feed the community</p>
+        </div>
+    </main>
+
+    <script src="js/signup.js"></script>
+</body>
+</html> 

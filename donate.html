@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecondServe - Donate Food</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/donate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="donate-header">
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="SecondServe Logo">
+                </a>
+            </div>
+            <nav class="donate-nav">
+                <a href="#" class="active">Donate Food</a>
+                <a href="#">My Donations</a>
+                <a href="#">About Us</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="notifications">
+                <a href="#" class="notification-icon">
+                    <i class="far fa-bell"></i>
+                </a>
+            </div>
+            <div class="user-profile">
+                <img src="images/user-profile.jpg" alt="User Profile">
+            </div>
+        </div>
+    </header>
+
+    <main class="donate-content">
+        <section class="donation-hero">
+            <div class="donation-hero-text">
+                <h1>Donate Surplus Food & Help Those in Need!</h1>
+                <p>Turn your excess food into hope. Every donation helps reduce waste and fight hunger in our community.</p>
+            </div>
+            <div class="donation-hero-image">
+                <img src="images/donation-hands.jpg" alt="Hands passing food">
+            </div>
+        </section>
+
+        <section class="donation-form-container">
+            <form class="donation-form">
+                <div class="upload-section">
+                    <h2>Upload Food Images</h2>
+                    <div class="upload-area">
+                        <div class="upload-placeholder">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag and drop your images here, or click to select files</p>
+                            <span class="upload-formats">Supported formats: JPEG, PNG (Max: 5 MB each)</span>
+                            <button type="button" class="btn upload-btn">Select Files</button>
+                            <input type="file" id="file-upload" multiple accept="image/jpeg, image/png" hidden>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-details-section">
+                    <h2>Food Details</h2>
+                    <div class="form-group">
+                        <label for="foodName">Food Name</label>
+                        <input type="text" id="foodName" name="foodName" placeholder="e.g., Fresh Pasta with Tomato Sauce" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Include ingredients, portion size, and any dietary information" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label for="quantity">Quantity</label>
+                            <div class="quantity-input">
+                                <input type="number" id="quantity" name="quantity" min="1" required>
+                                <select id="quantity-unit" name="quantityUnit">
+                                    <option value="servings">Servings</option>
+                                    <option value="portions">Portions</option>
+                                    <option value="pieces">Pieces</option>
+                                    <option value="boxes">Boxes</option>
+                                    <option value="kg">kg</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group half-width">
+                            <label for="bestBefore">Best Before</label>
+                            <input type="date" id="bestBefore" name="bestBefore" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <div class="category-options">
+                            <label class="category-option">
+                                <input type="radio" name="category" value="cooked-meals" required>
+                                <span>Cooked Meals</span>
+                            </label>
+                            <label class="category-option">
+                                <input type="radio" name="category" value="fresh-produce">
+                                <span>Fresh Produce</span>
+                            </label>
+                            <label class="category-option">
+                                <input type="radio" name="category" value="bakery">
+                                <span>Bakery</span>
+                            </label>
+                            <label class="category-option">
+                                <input type="radio" name="category" value="beverages">
+                                <span>Beverages</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pickup-details-section">
+                    <h2>Pickup Details</h2>
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location</label>
+                        <input type="text" id="pickupLocation" name="pickupLocation" placeholder="Enter address or use current location" required>
+                        <div class="location-map">
+                            <img src="images/location-map.jpg" alt="Location Map" class="map-preview">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label for="pickupDate">Available From</label>
+                            <div class="time-input">
+                                <input type="time" id="availableFrom" name="availableFrom" required>
+                                <button type="button" class="time-toggle">
+                                    <i class="far fa-clock"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group half-width">
+                            <label for="pickupTime">Available Until</label>
+                            <div class="time-input">
+                                <input type="time" id="availableUntil" name="availableUntil" required>
+                                <button type="button" class="time-toggle">
+                                    <i class="far fa-clock"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group delivery-option">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="canDeliver" name="canDeliver">
+                            <span class="checkbox-text">I can deliver the food</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickupInstructions">Special Instructions (Optional)</label>
+                        <textarea id="pickupInstructions" name="pickupInstructions" placeholder="Any additional information for pickup" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline">Save as Draft</button>
+                        <button type="submit" class="btn btn-primary">Donate Now</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">How It Works</a>
+                <a href="#">Safety Guidelines</a>
+                <a href="#">Community Rules</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <p class="copyright">© 2023 SecondServe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/donate.js"></script>
+</body>
+</html> 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecondServe - Sign In</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+    <main class="login-container">
+        <div class="login-image-section">
+            <img src="images/login-image.jpg" alt="People sharing food">
+        </div>
+        
+        <div class="login-form-section">
+            <div class="login-header">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="SecondServe Logo">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="login-form-container">
+                <h1>Welcome back</h1>
+                <p class="login-subtitle">Connecting Food with Purpose</p>
+                
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email or phone number</label>
+                        <input type="text" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="password" name="password" required>
+                            <button type="button" class="password-toggle">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="sign-in-btn">Sign in</button>
+                </form>
+                
+                <div class="or-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-login">
+                    <button type="button" class="google-login">
+                        <i class="fab fa-google"></i>
+                        <span>Continue with Google</span>
+                    </button>
+                    <button type="button" class="facebook-login">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Continue with Facebook</span>
+                    </button>
+                </div>
+                
+                <div class="signup-link">
+                    <span>New to FoodShare Connect?</span>
+                    <a href="signup.html">Create an account</a>
+                </div>
+            </div>
+            
+            <footer class="login-footer">
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Help</a>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <script src="js/login.js"></script>
+</body>
+</html> 
