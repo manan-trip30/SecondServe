@@ -30,7 +30,7 @@ export const registerWithEmailAndPassword = async (email, password, userData) =>
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    
+
     // Store additional user data in Firestore
     await setDoc(doc(db, "users", user.uid), {
       ...userData,
@@ -83,8 +83,9 @@ export const logoutUser = async () => {
 };
 
 // Check authentication state
-export const onAuthStateChanged = (callback) => {
+export const checkAuthState = (callback) => {
   return auth.onAuthStateChanged(callback);
 };
 
-export { auth, db, storage, analytics, onAuthStateChanged }; 
+
+export { auth, db, storage, analytics }; 
