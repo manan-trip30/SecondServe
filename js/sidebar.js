@@ -280,4 +280,4 @@ async function loadUserStats(userId, role) {
 }
 
 // Export functions
-export { openSidebar, closeSidebar, initSidebar }; 
+export { openSidebar, closeSidebar }; 
